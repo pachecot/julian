@@ -19,7 +19,7 @@ func timeEquals(got, want time.Time) bool {
 
 const epsilon = 0.000001
 
-func equalJulian(got, want Julian) bool {
+func equalJulian(got, want Date) bool {
 	if got == want {
 		return true
 	}
@@ -38,15 +38,15 @@ func TestJulian(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want Julian
+		want Date
 	}{
 		// {"now", args{now}, JulianDate(123)},
-		{"A", args{time.Date(2020, 1, 1, 12, 0, 0, 0, time.Local)}, Julian(2_458_850.20833333)},
-		{"Jan. 1  2017", args{time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC)}, Julian(2_457_754.50000)},
-		{"Jan. 1, 1990", args{time.Date(1990, 1, 1, 0, 0, 0, 0, time.UTC)}, Julian(2_447_892.50000)},
-		{"July 4, 1998", args{time.Date(1998, time.July, 4, 0, 0, 0, 0, time.UTC)}, Julian(2_450_998.50000)},
-		{"Feb. 14, 2010 5:21", args{time.Date(2010, time.February, 14, 5, 21, 0, 0, time.UTC)}, Julian(2_455_241.722917)},
-		{"Feb. 14, 2010 5:21 PST", args{time.Date(2010, time.February, 14, 5, 21, 0, 0, location)}, Julian(2_455_242.05625)},
+		{"A", args{time.Date(2020, 1, 1, 12, 0, 0, 0, time.Local)}, Date(2_458_850.20833333)},
+		{"Jan. 1  2017", args{time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC)}, Date(2_457_754.50000)},
+		{"Jan. 1, 1990", args{time.Date(1990, 1, 1, 0, 0, 0, 0, time.UTC)}, Date(2_447_892.50000)},
+		{"July 4, 1998", args{time.Date(1998, time.July, 4, 0, 0, 0, 0, time.UTC)}, Date(2_450_998.50000)},
+		{"Feb. 14, 2010 5:21", args{time.Date(2010, time.February, 14, 5, 21, 0, 0, time.UTC)}, Date(2_455_241.722917)},
+		{"Feb. 14, 2010 5:21 PST", args{time.Date(2010, time.February, 14, 5, 21, 0, 0, location)}, Date(2_455_242.05625)},
 	}
 
 	for _, tt := range tests {
@@ -63,7 +63,7 @@ func TestJulianDate_Gregorian(t *testing.T) {
 	layout, _ := time.Parse(time.RFC3339, time.RFC3339)
 	tests := []struct {
 		name string
-		jd   Julian
+		jd   Date
 		want time.Time
 	}{
 		{"now", Time(now), now},
@@ -81,7 +81,7 @@ func TestJulianDate_Gregorian(t *testing.T) {
 func TestJulianDate_Unix(t *testing.T) {
 	tests := []struct {
 		name string
-		jd   Julian
+		jd   Date
 		want int64
 	}{
 		// TODO: Add test cases.
@@ -98,7 +98,7 @@ func TestJulianDate_Unix(t *testing.T) {
 func TestJulianDate_Time(t *testing.T) {
 	tests := []struct {
 		name string
-		jd   Julian
+		jd   Date
 		want float64
 	}{
 		{"A", Time(time.Date(2020, 1, 1, 12, 0, 0, 0, time.Local)), 0.20833333},
@@ -119,7 +119,7 @@ func TestJulianDate_Time(t *testing.T) {
 func TestJulianDate_Day(t *testing.T) {
 	tests := []struct {
 		name string
-		jd   Julian
+		jd   Date
 		want float64
 	}{
 		// TODO: Add test cases.
@@ -136,7 +136,7 @@ func TestJulianDate_Day(t *testing.T) {
 func TestJulianDate_DayNumber(t *testing.T) {
 	tests := []struct {
 		name string
-		jd   Julian
+		jd   Date
 		want int
 	}{
 		// TODO: Add test cases.
@@ -153,7 +153,7 @@ func TestJulianDate_DayNumber(t *testing.T) {
 func TestJulianDate_Century(t *testing.T) {
 	tests := []struct {
 		name string
-		jd   Julian
+		jd   Date
 		want float64
 	}{
 		// TODO: Add test cases.
