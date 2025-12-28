@@ -15,16 +15,16 @@ import (
 type Date float64
 
 const (
-	seconds        = 86400
-	nanoseconds    = seconds * 1_000_000_000
-	julian_unix    = 2440587.5 // 1/1/1970
-	days_p_century = 36525
-	epoch_j2000    = 2451545
+	day_seconds     = 86400
+	day_nanoseconds = day_seconds * 1_000_000_000
+	julian_unix     = 2440587.5 // 1/1/1970
+	days_p_century  = 36525
+	epoch_j2000     = 2451545
 )
 
 // Time returns a julian date version of the time.
 func Time(t time.Time) Date {
-	j := float64(t.UnixNano())/nanoseconds + julian_unix
+	j := float64(t.UnixNano())/day_nanoseconds + julian_unix
 	return Date(j)
 }
 
@@ -45,7 +45,7 @@ func Time(t time.Time) Date {
 // NewDate panics if loc is nil.
 func NewDate(year int, month time.Month, day, hour, min, sec, nsec int, loc *time.Location) Date {
 	t := time.Date(year, month, day, hour, min, sec, nsec, loc)
-	jd := float64(t.UnixNano())/nanoseconds + julian_unix
+	jd := float64(t.UnixNano())/day_nanoseconds + julian_unix
 	return Date(jd)
 }
 
@@ -56,7 +56,7 @@ func (jd Date) Gregorian() time.Time {
 
 // Unix returns the Unix time corresponding to the julian date
 func (jd Date) Unix() int64 {
-	return int64((jd - julian_unix) * seconds)
+	return int64((jd - julian_unix) * day_seconds)
 }
 
 // UnixNano returns julian date as a Unix time, the number of nanoseconds elapsed
@@ -67,7 +67,7 @@ func (jd Date) Unix() int64 {
 // the result of calling UnixNano on the zero Time is undefined. The result does
 // not depend on the location associated with j.
 func (jd Date) UnixNano() int64 {
-	return int64((jd - julian_unix) * nanoseconds)
+	return int64((jd - julian_unix) * day_nanoseconds)
 }
 
 // Time returns the time fraction.
