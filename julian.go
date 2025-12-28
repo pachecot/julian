@@ -75,6 +75,11 @@ func (jd Date) Time() float64 {
 	return math.Mod(float64(jd), 1)
 }
 
+// Duration returns the time fraction.
+func (jd Date) Duration() time.Duration {
+	return time.Duration(day_nanoseconds * math.Mod(float64(jd), 1))
+}
+
 // Day returns the float64 representation of the Julian day.
 func (jd Date) Day() float64 {
 	return float64(jd)
