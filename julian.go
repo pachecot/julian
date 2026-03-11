@@ -24,6 +24,7 @@ const (
 
 // Time returns a julian date version of the time.
 func Time(t time.Time) Date {
+	t = t.In(time.UTC)
 	j := float64(t.UnixNano())/day_nanoseconds + julian_unix
 	return Date(j)
 }
@@ -51,7 +52,9 @@ func NewDate(year int, month time.Month, day, hour, min, sec, nsec int, loc *tim
 
 // Gregorian
 func (jd Date) Gregorian() time.Time {
-	return time.Unix(0, jd.UnixNano())
+	t := time.Unix(0, jd.UnixNano())
+	t = t.UTC().In(time.Local)
+	return t
 }
 
 // Unix returns the Unix time corresponding to the julian date
